@@ -20,11 +20,11 @@ TARGET = cubemx_dfu_bootloader
 # building variables
 ######################################
 # debug build?
-#DEBUG = 1
-DEBUG = 0
+DEBUG = 1
+#DEBUG = 0
 # optimization
-# OPT = -Og
-OPT = -Os
+OPT = -Og
+#OPT = -Os
 
 
 #######################################
