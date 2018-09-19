@@ -6,7 +6,7 @@
 #include "bootloader.h"
 
 // bootloader size is 12K
-#define BOOTLOADER_APP_START_ADDRESS        (0x08000000U + 1024 * 12)
+#define BOOTLOADER_APP_START_ADDRESS        (0x08000000U + 1024 * 16)
 
 int
 bootloader_check_bootmode(void)
