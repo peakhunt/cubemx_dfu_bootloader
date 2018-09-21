@@ -10,6 +10,7 @@
 #include "shell.h"
 #include "shell_if_usart.h"
 #include "shell_if_usb.h"
+#include "bootloader.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -39,6 +40,7 @@ typedef struct
 static void shell_command_help(ShellIntf* intf, int argc, const char** argv);
 static void shell_command_version(ShellIntf* intf, int argc, const char** argv);
 static void shell_command_uptime(ShellIntf* intf, int argc, const char** argv);
+static void shell_command_bootmode(ShellIntf* intf, int argc, const char** argv);
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -68,6 +70,11 @@ static ShellCommand     _commands[] =
     "uptime",
     "show system uptime",
     shell_command_uptime,
+  },
+  {
+    "bootmode",
+    "enter bootloader mode",
+    shell_command_bootmode,
   },
 };
 
@@ -113,6 +120,18 @@ shell_command_uptime(ShellIntf* intf, int argc, const char** argv)
 {
   shell_printf(intf, "\r\n");
   shell_printf(intf, "System Uptime: %lu\r\n", __uptime);
+}
+
+static void
+shell_command_bootmode(ShellIntf* intf, int argc, const char** argv)
+{
+  shell_printf(intf, "\r\n");
+  shell_printf(intf, "Entering Bootmode\r\n");
+
+  bootloader_set_bootmode();
+
+  // reset the core
+  NVIC_SystemReset();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

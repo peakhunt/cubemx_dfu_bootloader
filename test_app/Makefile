@@ -66,6 +66,7 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c \
+Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rtc_ex.c \
 Src/system_stm32f1xx.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
@@ -87,6 +88,7 @@ $(APP_DIR)/blinky.c                 \
 $(APP_DIR)/shell.c                  \
 $(APP_DIR)/shell_if_usart.c         \
 $(APP_DIR)/shell_if_usb.c           \
+$(APP_DIR)/bootloader.c             \
 $(APP_DIR)/app.c
 
 
