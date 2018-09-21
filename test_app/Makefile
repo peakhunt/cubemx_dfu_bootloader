@@ -76,6 +76,22 @@ Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c
 ASM_SOURCES =  \
 startup_stm32f103xb.s
 
+APP_DIR=app
+APP_SRC=                            \
+$(APP_DIR)/circ_buffer.c            \
+$(APP_DIR)/event_dispatcher.c       \
+$(APP_DIR)/soft_timer.c             \
+$(APP_DIR)/mainloop_timer.c         \
+$(APP_DIR)/stm32f1xx_callbacks.c    \
+$(APP_DIR)/blinky.c                 \
+$(APP_DIR)/shell.c                  \
+$(APP_DIR)/shell_if_usart.c         \
+$(APP_DIR)/shell_if_usb.c           \
+$(APP_DIR)/app.c
+
+
+C_SOURCES += $(APP_SRC)
+
 
 #######################################
 # binaries
@@ -133,7 +149,8 @@ C_INCLUDES =  \
 -IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc \
 -IMiddlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc \
 -IDrivers/CMSIS/Device/ST/STM32F1xx/Include \
--IDrivers/CMSIS/Include
+-IDrivers/CMSIS/Include \
+-I$(APP_DIR)
 
 
 # compile gcc flags

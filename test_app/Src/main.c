@@ -55,6 +55,8 @@
 #include "usb_device.h"
 #include "gpio.h"
 
+#include "app.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -102,7 +104,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  app_init_f();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -112,20 +114,14 @@ int main(void)
   MX_SPI1_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-
+  app_init_r();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-  /* USER CODE END WHILE */
-
-  /* USER CODE BEGIN 3 */
-    HAL_Delay(80);
-    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-
+    app_mainloop();
   }
   /* USER CODE END 3 */
 
