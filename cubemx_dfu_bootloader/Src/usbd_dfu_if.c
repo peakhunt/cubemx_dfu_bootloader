@@ -51,6 +51,11 @@ uint16_t MEM_If_Erase_FS(uint32_t Add)
   HAL_StatusTypeDef status;
   FLASH_EraseInitTypeDef eraseinitstruct;
 
+  if(Add < (uint32_t)BOOTLOADER_APP_START_ADDRESS)
+  {
+    return 3;
+  }
+
   /* Get the number of sector to erase from 1st sector */
   NbOfPages = ((BOOTLOADER_APP_END_ADDRESS - BOOTLOADER_APP_START_ADDRESS) / FLASH_PAGE_SIZE) + 1;
 
