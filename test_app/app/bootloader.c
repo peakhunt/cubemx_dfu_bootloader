@@ -13,7 +13,7 @@ bootloader_check_bootmode(void)
   uint32_t    d;
 
   d = HAL_RTCEx_BKUPRead(NULL,  RTC_BKP_DR1);
-  if(d != BOOTLOADER_MARKER)
+  if(d == BOOTLOADER_MARKER)
   {
     // bootloader enter set in backup register
     HAL_RTCEx_BKUPWrite(NULL, RTC_BKP_DR1, 0);

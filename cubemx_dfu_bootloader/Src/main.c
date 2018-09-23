@@ -11,7 +11,7 @@ int main(void)
 {
   HAL_Init();
 
-  if(bootloader_check_bootmode() == 0)
+  if(bootloader_check_bootmode() == 1)
   {
     bootloader_jump_to_app();
   }
@@ -21,10 +21,10 @@ int main(void)
   MX_GPIO_Init();
   MX_USB_DEVICE_Init();
 
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
+
   while (1)
   {
-    HAL_Delay(250);
-    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
   }
 }
 

@@ -20,11 +20,11 @@ TARGET = cubemx_dfu_bootloader
 # building variables
 ######################################
 # debug build?
-#DEBUG = 1
-DEBUG = 0
+DEBUG = 1
+#DEBUG = 0
 # optimization
-#OPT = -Og
-OPT = -Os
+OPT = -Og
+#OPT = -Os
 
 
 #######################################
@@ -190,6 +190,13 @@ $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 	
 $(BUILD_DIR):
 	mkdir $@		
+
+#######################################
+# flash
+#######################################
+
+flash: $(BUILD_DIR)/$(TARGET).bin
+	st-flash write $< 0x08000000
 
 #######################################
 # clean up

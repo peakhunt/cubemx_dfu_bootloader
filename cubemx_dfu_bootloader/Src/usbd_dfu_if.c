@@ -1,6 +1,7 @@
 #include "stm32f1xx_hal.h"
 #include "usbd_dfu_if.h"
 #include "bootloader.h"
+#include "gpio.h"
 
 //#define FLASH_DESC_STR      "@Internal Flash   /0x08000000/03*016Ka,01*016Kg,01*064Kg,07*128Kg,04*016Kg,01*064Kg,07*128Kg"
 //
@@ -56,14 +57,26 @@ uint16_t MEM_If_Erase_FS(uint32_t Add)
     return 3;
   }
 
+#if 0
   /* Get the number of sector to erase from 1st sector */
   NbOfPages = ((BOOTLOADER_APP_END_ADDRESS - BOOTLOADER_APP_START_ADDRESS) / FLASH_PAGE_SIZE) + 1;
 
   eraseinitstruct.TypeErase   = FLASH_TYPEERASE_PAGES;
   eraseinitstruct.PageAddress = BOOTLOADER_APP_START_ADDRESS;
   eraseinitstruct.NbPages     = NbOfPages;
+#else
+  NbOfPages = 1;
+
+  eraseinitstruct.TypeErase   = FLASH_TYPEERASE_PAGES;
+  eraseinitstruct.PageAddress = Add;
+  eraseinitstruct.NbPages     = NbOfPages;
+#endif
+
+  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
 
   status = HAL_FLASHEx_Erase(&eraseinitstruct, &PageError);
+
+  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
 
   if(status != HAL_OK)
   {
@@ -97,6 +110,7 @@ uint16_t MEM_If_Write_FS(uint8_t *src, uint8_t *dest, uint32_t Len)
       // error while writing
       return 1;
     }
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
   }
   return (USBD_OK);
 }
