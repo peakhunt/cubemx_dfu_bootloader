@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : gpio.c
+  * File Name          : RTC.c
   * Description        : This file provides code for the configuration
-  *                      of all used GPIO pins.
+  *                      of the RTC instances.
   ******************************************************************************
   * This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
@@ -48,49 +48,67 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "gpio.h"
+#include "rtc.h"
+
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
 
-/*----------------------------------------------------------------------------*/
-/* Configure GPIO                                                             */
-/*----------------------------------------------------------------------------*/
+RTC_HandleTypeDef hrtc;
+
+/* RTC init function */
+void MX_RTC_Init(void)
+{
+
+    /**Initialize RTC Only 
+    */
+  hrtc.Instance = RTC;
+  hrtc.Init.AsynchPrediv = RTC_AUTO_1_SECOND;
+  hrtc.Init.OutPut = RTC_OUTPUTSOURCE_NONE;
+  if (HAL_RTC_Init(&hrtc) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+}
+
+void HAL_RTC_MspInit(RTC_HandleTypeDef* rtcHandle)
+{
+  if(rtcHandle->Instance==RTC)
+  {
+  /* USER CODE BEGIN RTC_MspInit 0 */
+
+  /* USER CODE END RTC_MspInit 0 */
+    HAL_PWR_EnableBkUpAccess();
+    /* Enable BKP CLK enable for backup registers */
+    __HAL_RCC_BKP_CLK_ENABLE();
+    /* RTC clock enable */
+    __HAL_RCC_RTC_ENABLE();
+  /* USER CODE BEGIN RTC_MspInit 1 */
+
+  /* USER CODE END RTC_MspInit 1 */
+  }
+}
+
+void HAL_RTC_MspDeInit(RTC_HandleTypeDef* rtcHandle)
+{
+
+  if(rtcHandle->Instance==RTC)
+  {
+  /* USER CODE BEGIN RTC_MspDeInit 0 */
+
+  /* USER CODE END RTC_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_RTC_DISABLE();
+  /* USER CODE BEGIN RTC_MspDeInit 1 */
+
+  /* USER CODE END RTC_MspDeInit 1 */
+  }
+} 
+
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-
-/** Configure pins as 
-        * Analog 
-        * Input 
-        * Output
-        * EVENT_OUT
-        * EXTI
-*/
-void MX_GPIO_Init(void)
-{
-
-  GPIO_InitTypeDef GPIO_InitStruct;
-
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : PC13 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-}
-
-/* USER CODE BEGIN 2 */
-
-/* USER CODE END 2 */
 
 /**
   * @}

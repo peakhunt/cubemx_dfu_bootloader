@@ -5,7 +5,7 @@
 
 #include "bootloader.h"
 
-#define BOOTLOADER_MARKER     0x13141516u
+#define BOOTLOADER_MARKER     0x1314
 
 int
 bootloader_check_bootmode(void)
@@ -42,7 +42,7 @@ bootloader_jump_to_app(void)
   
   // disable systick interrupt
   // not necessary since this is called before SystemClock_Config()
-  // SysTick->CTRL &= (~SysTick_CTRL_ENABLE_Msk);
+  SysTick->CTRL &= (~SysTick_CTRL_ENABLE_Msk);
 
   // setup 
   SCB->VTOR = BOOTLOADER_APP_START_ADDRESS;

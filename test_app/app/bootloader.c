@@ -5,7 +5,7 @@
 
 #include "bootloader.h"
 
-#define BOOTLOADER_MARKER     0x13141516u
+#define BOOTLOADER_MARKER     0x1314
 
 int
 bootloader_check_bootmode(void)
@@ -17,9 +17,9 @@ bootloader_check_bootmode(void)
   {
     // bootloader enter set in backup register
     HAL_RTCEx_BKUPWrite(NULL, RTC_BKP_DR1, 0);
-    return 1;
+    return 0;
   }
-  return 0;
+  return 1;
 }
 
 void
@@ -31,7 +31,7 @@ bootloader_set_bootmode(void)
 void
 bootloader_jump_to_app(void)
 {
-  volatile uint32_t*     pApp = (volatile uint32_t*)BOOTLOADER_APP_START_ADDRESS;
+  static volatile uint32_t*     pApp = (volatile uint32_t*)BOOTLOADER_APP_START_ADDRESS;
 
   // check if valid image is installed in the flash
   // MSP is supposed to set to sram area
@@ -42,7 +42,7 @@ bootloader_jump_to_app(void)
   
   // disable systick interrupt
   // not necessary since this is called before SystemClock_Config()
-  // SysTick->CTRL &= (~SysTick_CTRL_ENABLE_Msk);
+  SysTick->CTRL &= (~SysTick_CTRL_ENABLE_Msk);
 
   // setup 
   SCB->VTOR = BOOTLOADER_APP_START_ADDRESS;
@@ -51,5 +51,5 @@ bootloader_jump_to_app(void)
   asm volatile ("msr msp, %0"::"g" (*(volatile uint32_t*)pApp));
 
   // jump to application
-  (*(void(**)())(pApp + 4))();
+  (*(void(**)())(pApp + 1))();
 }

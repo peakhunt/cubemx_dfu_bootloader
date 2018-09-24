@@ -39,6 +39,7 @@ BUILD_DIR = build
 # C sources
 C_SOURCES =  \
 Src/main.c \
+Src/rtc.c \
 Src/gpio.c \
 Src/usb_device.c \
 Src/usbd_conf.c \
@@ -62,6 +63,7 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c \
+Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rtc.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rtc_ex.c \
 Src/system_stm32f1xx.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
@@ -194,9 +196,14 @@ $(BUILD_DIR):
 #######################################
 # flash
 #######################################
-
 flash: $(BUILD_DIR)/$(TARGET).bin
 	st-flash write $< 0x08000000
+
+#######################################
+# openocd
+# #######################################
+openocd: $(BUILD_DIR)/$(TARGET).bin
+	openocd -f interface/stlink-v2.cfg -f target/stm32f1x_stlink.cfg
 
 #######################################
 # clean up

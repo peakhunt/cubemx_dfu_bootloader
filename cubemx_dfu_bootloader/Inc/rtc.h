@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : gpio.c
+  * File Name          : RTC.h
   * Description        : This file provides code for the configuration
-  *                      of all used GPIO pins.
+  *                      of the RTC instances.
   ******************************************************************************
   * This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
@@ -46,51 +46,39 @@
   *
   ******************************************************************************
   */
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __rtc_H
+#define __rtc_H
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "gpio.h"
-/* USER CODE BEGIN 0 */
+#include "stm32f1xx_hal.h"
+#include "main.h"
 
-/* USER CODE END 0 */
+/* USER CODE BEGIN Includes */
 
-/*----------------------------------------------------------------------------*/
-/* Configure GPIO                                                             */
-/*----------------------------------------------------------------------------*/
-/* USER CODE BEGIN 1 */
+/* USER CODE END Includes */
 
-/* USER CODE END 1 */
+extern RTC_HandleTypeDef hrtc;
 
-/** Configure pins as 
-        * Analog 
-        * Input 
-        * Output
-        * EVENT_OUT
-        * EXTI
-*/
-void MX_GPIO_Init(void)
-{
+/* USER CODE BEGIN Private defines */
 
-  GPIO_InitTypeDef GPIO_InitStruct;
+/* USER CODE END Private defines */
 
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
+extern void _Error_Handler(char *, int);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
+void MX_RTC_Init(void);
 
-  /*Configure GPIO pin : PC13 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+/* USER CODE BEGIN Prototypes */
+
+/* USER CODE END Prototypes */
+
+#ifdef __cplusplus
 }
-
-/* USER CODE BEGIN 2 */
-
-/* USER CODE END 2 */
+#endif
+#endif /*__ rtc_H */
 
 /**
   * @}

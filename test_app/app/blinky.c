@@ -5,7 +5,7 @@
 #include "blinky.h"
 #include "mainloop_timer.h"
 
-#define BLINKY_INTERVAL         100
+#define BLINKY_INTERVAL         80
 
 static SoftTimerElem    _blinky_timer;
 
