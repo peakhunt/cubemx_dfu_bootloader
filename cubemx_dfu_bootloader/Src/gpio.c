@@ -19,4 +19,10 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode    = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed   = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  // to pulldown USB DP/DM
+  GPIO_InitStruct.Pin     = GPIO_PIN_11 | GPIO_PIN_12;
+  GPIO_InitStruct.Mode    = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Speed   = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 }

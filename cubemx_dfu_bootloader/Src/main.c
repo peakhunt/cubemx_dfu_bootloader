@@ -23,8 +23,15 @@ int main(void)
 
   MX_GPIO_Init();
 
+  HAL_GPIO_WritePin(GPIOA,  GPIO_PIN_11, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA,  GPIO_PIN_12, GPIO_PIN_RESET);
+
   // DP/DM gotta be pulled down by hub
-  HAL_Delay(500);
+  for(int i = 0; i < 20; i++)
+  {
+    HAL_Delay(100);
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+  }
 
   MX_USB_DEVICE_Init();
 
