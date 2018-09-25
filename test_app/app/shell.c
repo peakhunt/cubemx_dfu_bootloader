@@ -6,6 +6,9 @@
 
 #include "stm32f1xx_hal.h"
 
+#include "usb_device.h"
+#include "usbd_core.h"
+
 #include "app_common.h"
 #include "shell.h"
 #include "shell_if_usart.h"
@@ -129,6 +132,10 @@ shell_command_bootmode(ShellIntf* intf, int argc, const char** argv)
   shell_printf(intf, "Entering Bootmode\r\n");
 
   bootloader_set_bootmode();
+
+#if 0 // obviously this is not enough
+  USBD_Stop(&hUsbDeviceFS);
+#endif
 
   // reset the core
   NVIC_SystemReset();
